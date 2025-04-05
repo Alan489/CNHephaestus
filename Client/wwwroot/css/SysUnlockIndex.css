@@ -1,0 +1,54 @@
+﻿#SysUnlockIndexRoot {
+  position:absolute;
+  left:0px;
+  top:0px;
+  background: linear-gradient(0deg, rgba(5,8,66,1) 28%, rgba(10,16,100,1) 100%);
+  height:100%;
+  width:100%;
+  color:rgb(180,180,225);
+}
+
+#SysUnlockIndexContainer{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: block;
+  justify-content:center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+
+}
+
+#SysUnlockIndexLoginContainer {
+  height: 200px;
+  width: 800px;
+  top:-100px;
+  position: relative;
+}
+
+#SysUnlockIndexLoginContainer h1 {
+  font-style:italic;
+}
+
+#SysUnlockIndexLoginBox {
+  display:grid;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+  position: relative;
+  top: -1em;
+  padding: 30px;
+  border: 3px groove rgb(180,180,225);
+  height: 15em;
+  line-height:1.7em;
+}
+
+#SysUnlockIndexRoot button {
+  background-color: rgba(0,0,0,0);
+  border: 1px solid white;
+  color: rgb(180,180,225);
+  margin: .5em;
+
+}

@@ -1,0 +1,136 @@
+﻿@page "/Sys/Unlock/Index"
+@inject CNHSystemService _sys
+@inject NavigationManager _navi
+
+<head>
+ <link rel="stylesheet" href="css/SysUnlockIndex.css">
+</head>
+
+<div id="SysUnlockIndexRoot">
+ <div id="SysUnlockIndexContainer">
+  <div id="SysUnlockIndexLoginContainer">
+   <h1>
+    Hephaestus
+   </h1>
+   <div id="SysUnlockIndexLoginBox">
+
+    @if (!servSubmit)
+    {
+     <label>Server</label>
+     <input type="text" id="ServerBox" @bind-value="serv" placeholder="server.example.com" />
+     <button id="ServerSubmit" @onclick="subServ">Next</button>
+    }
+    else
+    {
+     <label>Server</label>
+     <input type="text" id="ServerBox" @bind-value="servLock" disabled />
+     @if (!loginSubmit)
+     {
+      <label>Username</label>
+      <input type="text" id="uNameBox" @bind-value="uName" />
+      <label>Password</label>
+      <input type="password" id="uPassBox" @bind-value="uPass" />
+      <button id="LoginSubmit" @onclick="Login">Login</button>
+      <button id="Back" @onclick="Back">Back</button>
+     }
+     else
+     {
+      <label>Username</label>
+      <input type="text" id="uNameBox" @bind-value="uName" disabled />
+      <label>Password</label>
+      <input type="password" id="uPassBox" @bind-value="uPass" disabled />
+      <button id="LoginSubmit" @onclick="Login" disabled>Login</button>
+      <button id="Back" @onclick="Back" disabled>Back</button>
+     }
+    }
+   </div>
+   <div id="SysUnlockIndexMessages">
+    @message
+   </div>
+  </div>
+ </div>
+</div>
+
+@code {
+ private bool deb = false;
+
+ private bool servSubmit = false;
+ private string serv = "";
+ private string servLock = "";
+
+ private bool loginSubmit = false;
+ private string uName = "";
+ private string uNameLock = "";
+ private string uPass = "";
+ private string uPassLock = "";
+
+ private string message = "";
+
+ private async Task subServ()
+ {
+  if (deb) return;
+  deb = true;
+  servLock = serv;
+  message = $"Querying " + servLock;
+  StateHasChanged();
+
+  HttpResponseMessage? hrm = await _sys.checkForCNHapi(serv);
+
+  if (hrm == null || hrm.StatusCode != System.Net.HttpStatusCode.OK)
+  {
+   message = "Error: " + serv + " is not a valid CNH server.";
+
+   deb = false;
+   StateHasChanged();
+   return;
+  }
+
+  string? content = await hrm.Content.ReadAsStringAsync();
+
+  if (content != null && content.StartsWith("CNH // "))
+   message = $"Message from {servLock}: " + content.Replace("CNH // ", "");
+
+  servSubmit = true;
+  StateHasChanged();
+  deb = false;
+ }
+
+ private async Task Login()
+ {
+  if (deb) return;
+  deb = true;
+  message = $"Querying " + servLock;
+  loginSubmit = true;
+  StateHasChanged();
+  uNameLock = uName;
+  uPassLock = uPass;
+
+  bool response = await _sys.initAuthenticate(servLock, uNameLock, uPassLock);
+
+  if (response)
+   _navi.NavigateTo("/");
+  else
+   message = "Invalid Username/Password";
+
+  StateHasChanged();
+  loginSubmit = false;
+  deb = false;
+ }
+
+ private async Task Back()
+ {
+  if (deb) return;
+  deb = true;
+  message = "";
+  servSubmit = false;
+  serv = "";
+  servLock = "";
+  uName = "";
+  uNameLock = "";
+  uPass = "";
+  uPassLock = "";
+  StateHasChanged();
+  deb = false;
+ }
+
+}

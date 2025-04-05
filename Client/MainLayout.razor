@@ -1,0 +1,21 @@
+﻿@inherits LayoutComponentBase
+@inject CNHSystemService _sys
+@inject HttpClient _http
+@inject NavigationManager _navi
+
+<head>
+ <link rel="stylesheet" href="css/app.css">
+</head>
+
+
+<main>
+    @Body
+</main>
+
+@code {
+ protected override async Task OnInitializedAsync()
+ {
+  if (!_navi.Uri.Contains("/Sys/Unlock/") && (_sys.SYSURL == null || _sys.CURRENTSESSION == null))
+   _navi.NavigateTo("/Sys/Unlock/Index");
+ }
+}

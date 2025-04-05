@@ -22,7 +22,7 @@ namespace API.Services.User
    response.lastName = dr["Lastname"].ToString();
    response.sessionHash = dr["Passhash"].ToString();
 
-   response.sessionHash = CNHCryptoService.SessionHash(response); 
+   response.sessionHash = CNHCryptoService.SessionHash(response);
 
    return response;
   }

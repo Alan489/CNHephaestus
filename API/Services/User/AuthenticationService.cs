@@ -8,8 +8,8 @@ namespace API.Services.User
  {
   private SessionService _sessionService;
   private UserService _userService;
-  public AuthenticationService(SessionService sessionService, UserService us) 
-  { 
+  public AuthenticationService(SessionService sessionService, UserService us)
+  {
    _sessionService = sessionService;
    _userService = us;
   }

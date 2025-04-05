@@ -32,7 +32,7 @@ namespace CNHephaestus.Services
    if (response.session == null) return false;
 
    _systemService.CURRENTSESSION = response.session;
-   _systemService.SYSURL = url;
+   _systemService.SYSURL = "https://" + url + "/CNH/";
 
    return true;
   }

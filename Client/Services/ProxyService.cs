@@ -10,6 +10,7 @@ namespace CNHephaestus.Services
  {
   private readonly HttpClient _httpClient;
   private static readonly Dictionary<string, string> DummyHeaders = new();
+  public static CNHSystemService _sys;
   public static ProxyService Instance { get; private set; }
   public enum Method 
   { 
@@ -27,11 +28,15 @@ namespace CNHephaestus.Services
   {
 
    HttpRequestMessage request = new();
-   request.RequestUri = new Uri(proxyRequest.Url);
+   string url = proxyRequest.Url;
+
+   if (!string.IsNullOrEmpty(_sys.SYSURL))
+    url = _sys.SYSURL + url;
+
+
+   request.RequestUri = new Uri(url);
    if (proxyRequest.Content != null)
-   {
-    request.Content = JsonContent.Create<object>(proxyRequest.Content ?? new object());
-   }
+    request.Content = JsonContent.Create<object>(proxyRequest.Content);
    
    switch (proxyRequest.Method)
    {
@@ -58,8 +63,6 @@ namespace CNHephaestus.Services
    {
     HttpResponseMessage httpResponseMessage = await _httpClient.SendAsync(request);
     
-    Thread.Sleep(1000);
-    Console.WriteLine("I'm here!" + httpResponseMessage.StatusCode);
     return httpResponseMessage;
    }
    catch(Exception ex)

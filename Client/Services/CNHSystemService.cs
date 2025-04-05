@@ -33,6 +33,7 @@ namespace CNHephaestus.Services
   public CNHSystemService(ProxyService ps)
   {
    _proxyService = ps;
+   ProxyService._sys = this;
    _authService = new AuthenticationService(this, ps);
   }
 

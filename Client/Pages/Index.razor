@@ -1,20 +1,29 @@
 ﻿@page "/"
-
+@using CNHephaestus.Pages.Components
 @inject HttpClient http
 @inject ProxyService ps
 
-<h1>Hello, world!</h1>
+<head>
+ <link rel="stylesheet" href="css/MainLayout.css">
+</head>
+
+<div class="CNHROOT">
+  <div class="CNHCONTAINER">
+    <TopBar/>
+    <div class="CNHMAINCONTIANER">
+
+    </div>
+    <BottomBar/>
+  </div>
+</div>
 
 
 @code {
  protected override async Task OnInitializedAsync()
  {
-  ProxyRequest pr = new("https://localhost:7078/WeatherForecast", ProxyService.Method.GET);
-  Console.WriteLine($"Response code: {await pr.SendRequest()}");
 
-
-  Console.WriteLine(await pr.Response.Content.ReadAsStringAsync());
-
+  ProxyRequest pr = new ProxyRequest("APITest");
+  await pr.SendRequest();
 
  }
 }

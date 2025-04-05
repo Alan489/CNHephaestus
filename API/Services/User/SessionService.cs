@@ -1,5 +1,6 @@
 ﻿using API.Services.Crypto;
 using Shared.CNH.Shared.Communication.Authentication;
+using System.Data;
 
 namespace API.Services.User
 {
@@ -10,16 +11,16 @@ namespace API.Services.User
   {
    _cryptoService = cryptoService;
   }
-  public Session startSession(InitAuthentication ia)
+  public Session startSession(DataRow dr)
   {
    Session response = new Session();
    response.start = DateTime.UtcNow;
    response.end = DateTime.UtcNow.AddDays(1);
-   response.username = ia.username;
+   response.username = dr["Username"].ToString();
    response.sessionId = Guid.NewGuid();
-   response.firstName = "Alan";
-   response.lastName = "Decowski";
-   response.sessionHash = ia.password;
+   response.firstName = dr["Firstname"].ToString(); ;
+   response.lastName = dr["Lastname"].ToString();
+   response.sessionHash = dr["Passhash"].ToString();
 
    response.sessionHash = CNHCryptoService.SessionHash(response); 
 

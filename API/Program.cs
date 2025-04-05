@@ -1,5 +1,7 @@
 
 using API.Services.Crypto;
+using API.Services.DataAccess;
+using API.Services.DataAccess.Interface;
 using API.Services.User;
 
 namespace API
@@ -24,13 +26,37 @@ namespace API
    // Add services to the container.
 
    builder.Services.AddControllers();
+
    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
    builder.Services.AddEndpointsApiExplorer();
    builder.Services.AddSwaggerGen();
 
+   //Standard Services
    builder.Services.AddScoped<CNHCryptoService>();
    builder.Services.AddScoped<AuthenticationService>();
    builder.Services.AddScoped<SessionService>();
+   builder.Services.AddScoped<UserService>();
+
+   //DBAccess Service
+   string? DBFORMAT = builder.Configuration.GetSection("DataAccess").GetValue<string>("Format");
+   if (string.IsNullOrEmpty(DBFORMAT))
+    throw new InvalidDataException("DB Format is null or empty.");
+
+   DBFORMAT = DBFORMAT.ToUpper();
+
+   Console.WriteLine(Guid.NewGuid());
+   Console.WriteLine(CNHCryptoService.hashPassword("adecowski", "123456"));
+
+   switch(DBFORMAT)
+   {
+    case "SQLLITE":
+     builder.Services.AddSingleton<IDBAccess, SQLLiteAccess>();
+     break;
+
+    default:
+     throw new InvalidDataException($"DB Format \"{DBFORMAT}\" is not valid.");
+   }
+   
 
    var app = builder.Build();
 

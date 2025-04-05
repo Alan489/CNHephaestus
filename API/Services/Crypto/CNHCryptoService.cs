@@ -29,5 +29,13 @@ namespace API.Services.Crypto
    return GetHashString(sr);
   }
 
+  public static string hashPassword(string username, string password)
+  {
+   string salt = "KkSJiciSOp02=S!kis";
+   string pepper = "pepper!";
+   string toHash = $"{salt}{password}{pepper}{username.ToLower()}";
+   return GetHashString(toHash);
+  }
+
  }
 }

@@ -16,5 +16,6 @@ namespace Shared.CNH.Shared.Communication.Authentication
   public string username {get; set;}
   public string firstName {get; set;}
   public string lastName { get; set; }
+  public Guid userGUID { get; set;}
  }
 }

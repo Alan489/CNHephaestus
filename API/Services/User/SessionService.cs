@@ -21,6 +21,7 @@ namespace API.Services.User
    response.firstName = dr["Firstname"].ToString(); ;
    response.lastName = dr["Lastname"].ToString();
    response.sessionHash = dr["Passhash"].ToString();
+   response.userGUID = Guid.Parse(dr["Guid"].ToString());
 
    response.sessionHash = CNHCryptoService.SessionHash(response);
 

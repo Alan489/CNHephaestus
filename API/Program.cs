@@ -44,10 +44,20 @@ namespace API
 
    DBFORMAT = DBFORMAT.ToUpper();
 
-   Console.WriteLine(Guid.NewGuid());
-   Console.WriteLine(CNHCryptoService.hashPassword("adecowski", "123456"));
+   CNHCryptoService.salt = builder.Configuration.GetSection("Crypt").GetValue<string>("AccessKey1");
+   CNHCryptoService.pepper = builder.Configuration.GetSection("Crypt").GetValue<string>("AccessKey2");
+   CNHCryptoService.garlic = builder.Configuration.GetSection("Crypt").GetValue<string>("AccessKey3");
 
-   switch(DBFORMAT)
+   Console.WriteLine(Guid.NewGuid());
+   Console.WriteLine("************************************************************************");
+   Console.WriteLine("* First time running? The following can be entered into the users table:");
+   Console.WriteLine("* UserGUID:\t" + Guid.NewGuid());
+   Console.WriteLine("* Username:\tDEFAULTADMINISTRATOR");
+   Console.WriteLine("* Passhash:\t" + CNHCryptoService.hashPassword("DEFAULTADMINISTRATOR", "CodeNameHepheastus!"));
+   Console.WriteLine("* Password:\tCodeNameHepheastus!");
+   Console.WriteLine("************************************************************************");
+
+   switch (DBFORMAT)
    {
     case "SQLLITE":
      builder.Services.AddSingleton<IDBAccess, SQLLiteAccess>();

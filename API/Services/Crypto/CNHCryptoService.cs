@@ -8,6 +8,10 @@ namespace API.Services.Crypto
  public class CNHCryptoService
  {
 
+  public static string salt;
+  public static string pepper;
+  public static string garlic;
+
  public static byte[] GetHash(string inputString)
   {
    using (HashAlgorithm algorithm = SHA256.Create())
@@ -16,6 +20,7 @@ namespace API.Services.Crypto
 
   public static string GetHashString(string inputString)
   {
+   inputString = inputString + garlic;
    StringBuilder sb = new StringBuilder();
    foreach (byte b in GetHash(inputString))
     sb.Append(b.ToString("X2"));
@@ -31,8 +36,6 @@ namespace API.Services.Crypto
 
   public static string hashPassword(string username, string password)
   {
-   string salt = "KkSJiciSOp02=S!kis";
-   string pepper = "pepper!";
    string toHash = $"{salt}{password}{pepper}{username.ToLower()}";
    return GetHashString(toHash);
   }

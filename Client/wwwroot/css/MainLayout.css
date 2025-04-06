@@ -1,0 +1,13 @@
+﻿body {
+  background-color: rgba(60,60,60,1);
+  color:white;
+}
+.CNHMAINCONTIANER{
+  position:absolute;
+  top:1.2em;
+  bottom:1.5em;
+  left:0px;
+  right:0px;
+  width:auto;
+  height:auto;
+}

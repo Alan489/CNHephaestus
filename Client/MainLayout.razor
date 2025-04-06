@@ -8,7 +8,7 @@
 </head>
 
 
-<main>
+<main @oncontextmenu="HandleRightClick" @oncontextmenu:preventDefault="true">
     @Body
 </main>
 
@@ -17,5 +17,12 @@
  {
   if (!_navi.Uri.Contains("/Sys/Unlock/") && (_sys.SYSURL == null || _sys.CURRENTSESSION == null))
    _navi.NavigateTo("/Sys/Unlock/Index");
+ }
+ public async void HandleRightClick(MouseEventArgs mea)
+ {
+  if (_sys.SYSURL != null && _sys.CURRENTSESSION != null && _navi.Uri == _navi.BaseUri)
+  {
+   _sys.FireRightClick(mea);
+  }
  }
 }

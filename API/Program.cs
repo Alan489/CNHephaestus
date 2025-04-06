@@ -48,7 +48,6 @@ namespace API
    CNHCryptoService.pepper = builder.Configuration.GetSection("Crypt").GetValue<string>("AccessKey2");
    CNHCryptoService.garlic = builder.Configuration.GetSection("Crypt").GetValue<string>("AccessKey3");
 
-   Console.WriteLine(Guid.NewGuid());
    Console.WriteLine("************************************************************************");
    Console.WriteLine("* First time running? The following can be entered into the users table:");
    Console.WriteLine("* UserGUID:\t" + Guid.NewGuid());

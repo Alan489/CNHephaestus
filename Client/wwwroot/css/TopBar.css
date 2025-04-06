@@ -1,0 +1,88 @@
+﻿.TOPBARCONTAINER {
+  position:absolute;
+  width:100%;
+  left:0px;
+  top:0px;
+  height:1.2em;
+  display: block;
+  border-bottom:2px solid white;
+}
+
+#TopBarLeft{
+  position:relative;
+  float: left;
+  width: 25%;
+  height:1.2em;
+}
+
+#TopBarCenter {
+  position: absolute;
+  width: 50%;
+  left: 25%;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  height: 1.2em;
+}
+
+#TopBarRight {
+  position: relative;
+  float: right;
+  height: 1.2em;
+  width: 25%;
+  text-align: right;
+}
+
+.TopBarContextMenu{
+  
+  z-index:100;
+}
+
+.TopBarContextMenuItems {
+  display: inline-flex;
+}
+
+  .TopBarContextMenuItems .MenuItem {
+    height: 1em;
+    display: inline-flex;
+    margin-left: 10px;
+    background-color: unset;
+  }
+
+      .TopBarContextMenuItems .MenuItem:hover {
+        height: 1em;
+        background-color: rgba(100,100,100,1);
+      }
+
+  .TopBarContextMenuItems .MenuItemSelected {
+    height: 1em;
+    background-color: rgba(100,100,100,1);
+    margin-left: 10px;
+  }
+
+  .SystemContextMenu{
+    position:relative;
+    margin-left:5px;
+    z-index:100;
+    background-color: rgba(75,75,75,1);
+    width:200px;
+    border: 1px solid white;
+    padding: 3px;
+  }
+.ContextMenuButton {
+  width: 200px;
+  margin-bottom:5px;
+}
+  .ContextMenuButton:hover {
+    background-color: rgba(100,100,100,1);
+  }
+
+
+.WindowsPerma{
+  border-bottom: 1px solid white;
+  margin-bottom: 4px;
+}
+
+.WindowsCurrentlyOpen{
+
+}

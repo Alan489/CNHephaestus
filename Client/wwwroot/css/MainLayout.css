@@ -4,11 +4,10 @@
 }
 .CNHMAINCONTIANER{
   position:absolute;
-  top:1em;
+  top:1.2em;
   bottom:1.5em;
   left:0px;
   right:0px;
   width:auto;
   height:auto;
-  border:1px solid green;
 }

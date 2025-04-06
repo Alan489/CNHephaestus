@@ -1,5 +1,8 @@
 ﻿using CNHephaestus.Objects.CNHService;
+using CNHephaestus.Pages.Components.Windows;
+using Microsoft.AspNetCore.Components.Web;
 using Shared.CNH.Shared.Communication.Authentication;
+using System.ComponentModel;
 
 namespace CNHephaestus.Services
 {
@@ -30,6 +33,13 @@ namespace CNHephaestus.Services
    }
   }
 
+  public List<WindowBase> ActiveWindows { get; set; } = new List<WindowBase>();
+
+  public WindowBase? ActiveWindow { get; set; }
+
+  public event EventHandler<MouseEventArgs> rightClickContextMenu;
+  public event EventHandler<EventArgs> WindowsChanged;
+
   public CNHSystemService(ProxyService ps)
   {
    _proxyService = ps;
@@ -49,6 +59,16 @@ namespace CNHephaestus.Services
    int responseCode = await request.SendRequest();
 
    return request.Response;
+  }
+
+  public void FireRightClick(MouseEventArgs mea)
+  {
+   rightClickContextMenu?.Invoke(this, mea);
+  }
+
+  public void FireRefresh()
+  {
+   WindowsChanged?.Invoke(this, EventArgs.Empty);
   }
 
   public async Task<bool> initAuthenticate(string url, string username, string password)

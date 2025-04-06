@@ -1,0 +1,30 @@
+﻿@inject CNHSystemService _sys
+@inject NavigationManager _navi
+@using CNHephaestus.Pages.Components.Windows
+
+<div class="SystemContextMenu">
+ <div class="WindowsPerma" >
+  <div id="Logout" class="ContextMenuButton" @onclick="TestWindowToggle">
+    TestWindowOpen
+   </div>
+  </div>
+ <div class="WindowsCurrentlyOpen">
+  <div id="g" class="ContextMenuButton">
+    b
+  </div>
+ </div>
+</div>
+
+@code {
+ private async Task TestWindowToggle()
+ {
+  if (_sys.ActiveWindows.Count != 1)
+  {
+   _sys.ActiveWindows.Add(new WindowBase());
+  }
+  else
+   _sys.ActiveWindows.RemoveAt(0);
+   _sys.FireRefresh();
+   StateHasChanged();
+ }
+}

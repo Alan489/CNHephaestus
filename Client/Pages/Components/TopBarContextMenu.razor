@@ -1,0 +1,58 @@
+﻿@using CNHephaestus.Pages.Components.TopBarContextMenus
+
+<div class="TopBarContextMenu">
+ <div class="TopBarContextMenuItems">
+  @foreach (string item in menuItems)
+  {
+   @if (selected == item)
+   {
+    <div class="MenuItemSelected" @onclick="() => onClick(item)">
+     @item
+    </div>
+   }
+   else
+   {
+    <div class="MenuItem" @onclick="() => onClick(item)">
+     @item
+    </div>
+   }
+  }
+ </div>
+ @if (selected != null)
+ {
+  @switch (selected)
+  {
+    case "Windows":
+    <WindowsContextMenu/>
+    break;
+   case "System":
+    <SystemContextMenu />
+    break;
+    case "File":
+    <FileContextMenu/>
+    break;
+   default:
+
+    break;
+  }
+ }
+
+</div>
+
+
+@code {
+ private string[] menuItems = { "System", "File", "Edit", "Windows" };
+ private string? selected = null;
+
+ private void onClick(string item)
+ {
+  if (selected == item)
+  {
+   selected = null;
+   StateHasChanged();
+   return;
+  }
+  selected = item;
+  StateHasChanged();
+ }
+}

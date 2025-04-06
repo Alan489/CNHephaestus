@@ -1,0 +1,17 @@
+﻿@inject CNHSystemService _sys
+@inject NavigationManager _navi
+
+<div class="SystemContextMenu">
+ <div id="Logout" class="TopBarContextMenuItems" @onclick="Logout">
+    fileee
+  </div>
+</div>
+
+@code {
+ private async Task Logout()
+ {
+  _sys.SYSURL = null;
+  _sys.CURRENTSESSION = null;
+  _navi.NavigateTo("/", true);
+ }
+}

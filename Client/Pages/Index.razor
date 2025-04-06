@@ -1,29 +1,41 @@
 ﻿@page "/"
 @using CNHephaestus.Pages.Components
+@using System.ComponentModel
+@using CNHephaestus.Pages.Components.Windows
 @inject HttpClient http
 @inject ProxyService ps
+@inject CNHSystemService _sys
 
 <head>
  <link rel="stylesheet" href="css/MainLayout.css">
+ <link rel="stylesheet" href="css/Window.css">
 </head>
 
 <div class="CNHROOT">
-  <div class="CNHCONTAINER">
-    <TopBar/>
-    <div class="CNHMAINCONTIANER">
-
-    </div>
-    <BottomBar/>
+ <div class="CNHCONTAINER">
+  <TopBar />
+  <div class="CNHMAINCONTIANER">
+   @foreach (WindowBase c in _sys.ActiveWindows)
+   {
+    <WindowBase/>
+   }
   </div>
+  <BottomBar />
+ </div>
 </div>
 
 
 @code {
  protected override async Task OnInitializedAsync()
  {
+   _sys.WindowsChanged += refresh;
 
-  ProxyRequest pr = new ProxyRequest("APITest");
-  await pr.SendRequest();
 
+ }
+
+ public void refresh(object? caller, EventArgs? ea)
+ {
+   Console.WriteLine("Fired.");
+  StateHasChanged();
  }
 }

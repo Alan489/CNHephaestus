@@ -8,16 +8,22 @@
 
 <head>
  <link rel="stylesheet" href="css/MainLayout.css">
- <link rel="stylesheet" href="css/Window.css">
+ <link rel="stylesheet" href="css/Windows.css">
 </head>
 
 <div class="CNHROOT">
  <div class="CNHCONTAINER">
   <TopBar />
   <div class="CNHMAINCONTIANER">
-   @foreach (WindowBase c in _sys.ActiveWindows)
+   @if (_sys.ActiveWindow != null)
    {
-    <WindowBase/>
+     @switch(_sys.ActiveWindow.Type)
+    {
+      default:
+     case "TestWindow":
+      <TestWindow info="@_sys.ActiveWindow" />
+    break;
+    }
    }
   </div>
   <BottomBar />
@@ -28,14 +34,13 @@
 @code {
  protected override async Task OnInitializedAsync()
  {
-   _sys.WindowsChanged += refresh;
+  _sys.WindowsChanged += refresh;
 
 
  }
 
  public void refresh(object? caller, EventArgs? ea)
  {
-   Console.WriteLine("Fired.");
   StateHasChanged();
  }
 }

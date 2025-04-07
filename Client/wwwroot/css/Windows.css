@@ -1,1 +1,20 @@
-﻿
+﻿.CNHWINDOW {
+  position: absolute;
+  left: 5px;
+  right: 5px;
+  top: 8px;
+  bottom: 8px;
+  border: 2px solid white;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.CNHWINDOWTOPBAR{
+  height: 1.5em;
+  position: relative;
+  border-bottom: 2px solid white;
+  width:100%;
+}
+
+.CNHWINDOWCONTENTCONTAINER{
+
+}

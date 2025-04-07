@@ -1,11 +1,19 @@
-﻿
+﻿@inject CNHSystemService _sys
+
+
 <div class="CNHWINDOW">
-  <div class="CNHWINDOWTOPBAR">
-    This is the top bar
-  </div>
-  <div class="CNHWINDOWCONTENTCONTAINER">
-    This is the content area
-  </div>
+ <div class="CNHWINDOWTOPBAR">
+  @info.Title
+  <span @onclick="closeme">X</span>
+
+ </div>
+ <div class="CNHWINDOWCONTENTCONTAINER">
+  This is the content area
+  @if (info.Memory != null && info.Memory.Count >= 1)
+  {
+   <input type="text" @bind-value="info.Memory[0]" />
+  }
+ </div>
 </div>
 
 
@@ -14,19 +22,32 @@
 @code {
 
  [Parameter]
- public int x { get; set; } = 0;
- [Parameter]
- public int y { get; set; } = 0;
- [Parameter]
- public int w { get; set; } = 0; 
- [Parameter]
- public int h { get; set; } = 0;
+ public Window info { get; set; }
+
+ public TestWindow()
+ {
+
+ }
 
  protected override async Task OnInitializedAsync()
  {
-  Console.WriteLine("I'm here!");
+  if (info.Memory.Count < 1)
+   info.Memory.Add("");
+  StateHasChanged();
  }
 
+ protected override async Task OnParametersSetAsync()
+ {
+  if (info.Memory.Count < 1)
+   info.Memory.Add("");
+  StateHasChanged();
+ }
+
+ private void closeme()
+ {
+  _sys.CloseWindow(info);
+  info.Memory.RemoveAt(0);
+ }
 
 
 }

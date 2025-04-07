@@ -1,7 +1,14 @@
-html {
+#app {
   font-family: Arial, Helvetica, sans-serif;
-  overflow:clip;
-  user-select:none;
+  overflow: clip;
+  user-select: none;
+  background-color: rgba(60,60,60,1);
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  color: white;
 }
 
 

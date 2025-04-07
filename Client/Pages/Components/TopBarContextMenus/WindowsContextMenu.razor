@@ -4,27 +4,55 @@
 
 <div class="SystemContextMenu">
  <div class="WindowsPerma" >
-  <div id="Logout" class="ContextMenuButton" @onclick="TestWindowToggle">
-    TestWindowOpen
+  <div id="TestWindow" class="ContextMenuButton" @onclick="TestWindowToggle">
+    Window
    </div>
+  <div id="TestWindow2" class="ContextMenuButton" @onclick="TestWindow2Toggle">
+   Window2
+  </div>
   </div>
  <div class="WindowsCurrentlyOpen">
-  <div id="g" class="ContextMenuButton">
-    b
-  </div>
+  @foreach(Window w in _sys.ActiveWindows)
+  {
+   @if (_sys.ActiveWindow == w)
+   {
+    <div class="ContextMenuButtonActive" @onclick="() => _sys.SetActiveWindow(w)">
+      @w.Title
+      </div>
+   } else
+   {
+    <div class="ContextMenuButton" @onclick="() => _sys.SetActiveWindow(w)">
+     @w.Title
+    </div>
+   }
+  }
  </div>
 </div>
 
 @code {
+
+ private static Window testWindow = new Window("TestWindow", "TestWindow");
+ private static Window testWindow2 = new Window("TestWindow", "TestWindow2");
+
  private async Task TestWindowToggle()
  {
-  if (_sys.ActiveWindows.Count != 1)
-  {
-   _sys.ActiveWindows.Add(new WindowBase());
-  }
+  if (_sys.ActiveWindow == testWindow)
+   _sys.CloseWindow(testWindow);
   else
-   _sys.ActiveWindows.RemoveAt(0);
-   _sys.FireRefresh();
-   StateHasChanged();
+   _sys.SetActiveWindow(testWindow);
+
+  StateHasChanged();
  }
+
+ private async Task TestWindow2Toggle()
+ {
+  if (_sys.ActiveWindow == testWindow2)
+   _sys.CloseWindow(testWindow2);
+  else
+   _sys.SetActiveWindow(testWindow2);
+
+  StateHasChanged();
+ }
+
+
 }

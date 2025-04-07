@@ -71,22 +71,6 @@ namespace CNHephaestus.Services
 
   }
 
-  private void TimeThread()
-  {
-   int seconds = 0;
-   while(true)
-   {
-    Thread.Sleep(1000);
-    SecondFire?.Invoke(this, EventArgs.Empty);
-    seconds++;
-    if (seconds >= 60)
-    {
-     MinuteFire?.Invoke(this, EventArgs.Empty);
-     seconds = 0;
-    }
-   }
-  }
-
   public async Task<HttpResponseMessage?> checkForCNHapi(string url)
   {
    if (string.IsNullOrEmpty(url)) return null;

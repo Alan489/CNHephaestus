@@ -86,3 +86,9 @@
 .WindowsCurrentlyOpen{
 
 }
+
+.ContextMenuButtonActive {
+  width: 200px;
+  margin-bottom: 5px;
+  border-left: 5px solid green;
+}

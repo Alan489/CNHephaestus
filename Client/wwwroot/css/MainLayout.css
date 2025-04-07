@@ -1,7 +1,13 @@
 ﻿body {
+
   background-color: rgba(60,60,60,1);
   color:white;
 }
+.CNHROOT {
+
+  background-color: rgba(60,60,60,1);
+}
+
 .CNHMAINCONTIANER{
   position:absolute;
   top:1.2em;

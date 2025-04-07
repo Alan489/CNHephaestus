@@ -7,6 +7,8 @@
   public List<string>? Data { get; set; }
   public List<string> Memory { get; private set; } = new List<string>();
 
+  public bool unsafeToClose { get; set; } = false;
+
   public Window(string type, string title, List<string>? data = null)
   {
    Title = title;

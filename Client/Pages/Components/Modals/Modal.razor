@@ -1,0 +1,24 @@
+﻿
+<div class="Modal">
+ <div class="ModalContainer">
+  <div class="ModalHeader">
+   @info.title
+  </div>
+  <div class="ModalDescription">
+   @info.description
+  </div>
+  <div class="ModalButtons">
+   <button class="ModalOk" @onclick="() => info.FireOk()">
+    Ok
+   </button>
+   <button class="ModalCancel" @onclick="() => info.FireCancel()">
+    Cancel
+   </button>
+  </div>
+ </div>
+</div>
+
+@code {
+ [Parameter]
+ public ModalClass info { get; set; }
+}

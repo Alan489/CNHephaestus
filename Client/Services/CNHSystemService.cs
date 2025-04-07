@@ -6,6 +6,7 @@ using System.Timers;
 using System.ComponentModel;
 using Timer = System.Timers.Timer;
 using Shared.CNH.Shared.Communication.System;
+using CNHephaestus.Pages.Components.Modals;
 
 namespace CNHephaestus.Services
 {
@@ -36,7 +37,6 @@ namespace CNHephaestus.Services
    }
   }
 
-  public List<Window> ActiveWindows { get; set; } = new List<Window>();
 
   private SysInfo? _syssssss;
 
@@ -49,8 +49,11 @@ namespace CNHephaestus.Services
     FireRefresh();
    }
   }
-
+  public List<Window> ActiveWindows { get; set; } = new List<Window>();
   public Window? ActiveWindow { get; set; }
+
+  public ModalClass? activeModal { get; set; }
+
 
   public event EventHandler<MouseEventArgs> rightClickContextMenu;
   public event EventHandler<EventArgs> WindowsChanged;
@@ -127,8 +130,40 @@ namespace CNHephaestus.Services
   {
    if (!ActiveWindows.Contains(wb))
     return;
-   ActiveWindows.Remove(wb);
 
+   if (wb.unsafeToClose)
+   {
+    activeModal = new ModalClass();
+    activeModal.title = "Unsaved Changes";
+    activeModal.description = "Window " + wb.Title + " has unsaved changes.";
+    activeModal.EventCancel += (object? caller, EventArgs ea) =>
+    {
+     activeModal.ClearDelegates();
+     activeModal = null;
+     FireRefresh();
+
+    };
+
+    activeModal.EventOk += (object? caller, EventArgs ea) =>
+    {
+     activeModal.ClearDelegates();
+     activeModal = null;
+
+     ActiveWindows.Remove(wb);
+     if (ActiveWindow == wb)
+      ActiveWindow = (ActiveWindows.Count > 0) ? ActiveWindows[0] : null;
+
+     FireRefresh();
+
+     FireRefresh();
+
+    };
+
+    FireRefresh();
+    return;
+   }
+
+   ActiveWindows.Remove(wb);
    if (ActiveWindow == wb)
     ActiveWindow = (ActiveWindows.Count > 0) ? ActiveWindows[0] : null;
 

@@ -2,6 +2,7 @@
 @using CNHephaestus.Pages.Components
 @using System.ComponentModel
 @using CNHephaestus.Pages.Components.Windows
+@using CNHephaestus.Pages.Components.Modals
 @inject HttpClient http
 @inject ProxyService ps
 @inject CNHSystemService _sys
@@ -9,20 +10,34 @@
 <head>
  <link rel="stylesheet" href="css/MainLayout.css">
  <link rel="stylesheet" href="css/Windows.css">
+ <link rel="stylesheet" href="css/Modals.css">
 </head>
 
 <div class="CNHROOT">
  <div class="CNHCONTAINER">
+
+  @if (_sys.activeModal != null)
+  {
+   <Modal info="@_sys.activeModal"/>
+  }
+
   <TopBar />
   <div class="CNHMAINCONTIANER">
    @if (_sys.ActiveWindow != null)
    {
-     @switch(_sys.ActiveWindow.Type)
+    @switch (_sys.ActiveWindow.Type)
     {
-      default:
+     case "CADDashboard":
+      <CADDashboard info="@_sys.ActiveWindow" />
+      break;
+     case "UnitsDashboard":
+      <UnitsDashboard info="@_sys.ActiveWindow" />
+      break;
+
+     default:
      case "TestWindow":
       <TestWindow info="@_sys.ActiveWindow" />
-    break;
+      break;
     }
    }
   </div>

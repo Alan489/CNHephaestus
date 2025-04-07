@@ -3,18 +3,14 @@
 
 <div class="CNHWINDOW">
  <div class="CNHWINDOWTOPBAR">
-  @info.Title
+  Calls Dashboard
   <span class="WindowControl">
    <span @onclick="closeme">X</span>
    <span @onclick="minimize">-</span>
   </span>
  </div>
  <div class="CNHWINDOWCONTENTCONTAINER">
-  This is the content area
-  @if (info.Memory != null && info.Memory.Count >= 1)
-  {
-   <input type="text" @onchange="changed" />
-  }
+  
  </div>
 </div>
 
@@ -26,36 +22,18 @@
  [Parameter]
  public Window info { get; set; }
 
- public TestWindow()
- {
-
- }
-
- private void changed(ChangeEventArgs __e)
- {
-  info.Memory[0] = __e?.Value?.ToString() ?? "";
-  info.unsafeToClose = true;
- }
-
 
  protected override async Task OnInitializedAsync()
  {
-  if (info.Memory.Count < 1)
-   info.Memory.Add("");
-  StateHasChanged();
  }
 
  protected override async Task OnParametersSetAsync()
  {
-  if (info.Memory.Count < 1)
-   info.Memory.Add("");
-  StateHasChanged();
  }
 
  private void closeme()
  {
   _sys.CloseWindow(info);
-  info.Memory.RemoveAt(0);
  }
 
  private void minimize()

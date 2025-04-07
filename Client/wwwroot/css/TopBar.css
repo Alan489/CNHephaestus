@@ -91,11 +91,18 @@
 
 }
 
-.WindowInactive {
+.WindowInactiveUnsafe {
   width: 200px;
   margin-bottom: 5px;
   padding-left: 2px;
   border-left: 5px solid orange;
+}
+
+.WindowInactive {
+  width: 200px;
+  margin-bottom: 5px;
+  padding-left: 2px;
+  border-left: 5px solid black;
 }
 
 .WindowActive {

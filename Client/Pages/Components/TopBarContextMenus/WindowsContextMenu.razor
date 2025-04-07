@@ -3,57 +3,68 @@
 @using CNHephaestus.Pages.Components.Windows
 
 <div class="SystemContextMenu">
- <div class="WindowsPerma" >
-  <div id="TestWindow" class="ContextMenuButton" @onclick="TestWindowToggle">
-    Window
-   </div>
-  <div id="TestWindow2" class="ContextMenuButton" @onclick="TestWindow2Toggle">
-   Window2
+ <div class="WindowsPerma">
+  <div id="CADDashboard" class="ContextMenuButton" @onclick="Dashboard">
+   Calls Dashboard
+  </div>
+  <div id="Units" class="ContextMenuButton" @onclick="Units">
+   Units Dashboard
   </div>
   <div id="TestWindow2" class="ContextMenuButton" @onclick="Window3">
    ManyWindow3
   </div>
-  </div>
+ </div>
  <div class="WindowsCurrentlyOpen">
-  @foreach(Window w in _sys.ActiveWindows)
+  @foreach (Window w in _sys.ActiveWindows)
   {
    @if (_sys.ActiveWindow == w)
    {
     <div class="WindowActive" @onclick="() => _sys.SetActiveWindow(null)" @oncontextmenu="() => _sys.CloseWindow(w)">
-      @w.Title
-      </div>
-   } else
-   {
-    <div class="WindowInactive" @onclick="() => _sys.SetActiveWindow(w)" @oncontextmenu="() => _sys.CloseWindow(w)">
      @w.Title
     </div>
    }
+   else
+   {
+    @if (w.unsafeToClose)
+    {
+     <div class="WindowInactiveUnsafe" @onclick="() => _sys.SetActiveWindow(w)" @oncontextmenu="() => _sys.CloseWindow(w)">
+      @w.Title
+     </div>
+    }
+    else
+    {
+     <div class="WindowInactive" @onclick="() => _sys.SetActiveWindow(w)" @oncontextmenu="() => _sys.CloseWindow(w)">
+      @w.Title
+     </div>
+    }
+
+  }
   }
  </div>
 </div>
 
 @code {
 
- private static Window testWindow = new Window("TestWindow", "TestWindow");
- private static Window testWindow2 = new Window("TestWindow", "TestWindow2");
+ private static Window DashboardWindow = new Window("CADDashboard", "Calls");
+ private static Window UnitsWindow = new Window("UnitsDashboard", "Units");
  private int c = 0;
 
- private async Task TestWindowToggle()
+ private async Task Dashboard()
  {
-  if (_sys.ActiveWindow == testWindow)
-   _sys.CloseWindow(testWindow);
+  if (_sys.ActiveWindow == DashboardWindow)
+   _sys.CloseWindow(DashboardWindow);
   else
-   _sys.SetActiveWindow(testWindow);
+   _sys.SetActiveWindow(DashboardWindow);
 
   StateHasChanged();
  }
 
- private async Task TestWindow2Toggle()
+ private async Task Units()
  {
-  if (_sys.ActiveWindow == testWindow2)
-   _sys.CloseWindow(testWindow2);
+  if (_sys.ActiveWindow == UnitsWindow)
+   _sys.CloseWindow(UnitsWindow);
   else
-   _sys.SetActiveWindow(testWindow2);
+   _sys.SetActiveWindow(UnitsWindow);
 
   StateHasChanged();
  }
@@ -63,5 +74,12 @@
   _sys.SetActiveWindow(new Window("TestWindow", "Window " + c++));
  }
 
+ protected override async Task OnInitializedAsync()
+ {
+  _sys.WindowsChanged += (object? caller, EventArgs? ea) =>
+  {
+   StateHasChanged();
+  };
+ }
 
 }

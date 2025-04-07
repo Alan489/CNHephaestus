@@ -13,8 +13,18 @@
   position: relative;
   border-bottom: 2px solid white;
   width:100%;
+  align-content:center;
+  justify-content:center;
+  text-align:center;
 }
 
-.CNHWINDOWCONTENTCONTAINER{
+.WindowControl{
+  float:right;
+}
 
+.WindowControl span {
+  padding-right: 10px;
+}
+
+.CNHWINDOWCONTENTCONTAINER {
 }

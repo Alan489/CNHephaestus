@@ -1,12 +1,28 @@
-﻿<head>
+﻿@inject CNHSystemService _sys
+
+<head>
  <link rel="stylesheet" href="css/BottomBar.css">
 </head>
 
 <div class="BOTTOMBARCONTAINER">
- BottomBar
+ @time
 </div>
 
 
 @code {
+ private string time = "";
+
+ protected override async Task OnInitializedAsync()
+ {
+  time = DateTime.Now.ToString("HH:mm:ss");
+  _sys.SecondFire += timeUpdate;
+  StateHasChanged();
+ }
+
+ public void timeUpdate(object? sender, EventArgs? ea)
+ {
+  time = DateTime.Now.ToString("HH:mm:ss");
+  StateHasChanged();
+ }
 
 }

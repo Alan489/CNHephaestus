@@ -5,6 +5,7 @@ using Shared.CNH.Shared.Communication.Authentication;
 using System.Timers;
 using System.ComponentModel;
 using Timer = System.Timers.Timer;
+using Shared.CNH.Shared.Communication.System;
 
 namespace CNHephaestus.Services
 {
@@ -36,6 +37,18 @@ namespace CNHephaestus.Services
   }
 
   public List<Window> ActiveWindows { get; set; } = new List<Window>();
+
+  private SysInfo? _syssssss;
+
+  public SysInfo? sysInfo { get
+   {
+    return _syssssss;
+   } set
+   {
+    _syssssss = value;
+    FireRefresh();
+   }
+  }
 
   public Window? ActiveWindow { get; set; }
 
@@ -95,10 +108,16 @@ namespace CNHephaestus.Services
    WindowsChanged?.Invoke(this, EventArgs.Empty);
   }
 
-  public void SetActiveWindow(Window wb)
+  public void SetActiveWindow(Window? wb)
   {
-   if (!ActiveWindows.Contains(wb))
+   if (wb != null && !ActiveWindows.Contains(wb))
     ActiveWindows.Add(wb);
+
+   if (wb != null)
+   {
+    ActiveWindows.Remove(wb);
+    ActiveWindows.Insert(0, wb);
+   }
 
    ActiveWindow = wb;
    FireRefresh();
@@ -111,7 +130,7 @@ namespace CNHephaestus.Services
    ActiveWindows.Remove(wb);
 
    if (ActiveWindow == wb)
-    ActiveWindow = null;
+    ActiveWindow = (ActiveWindows.Count > 0) ? ActiveWindows[0] : null;
 
    FireRefresh();
   }

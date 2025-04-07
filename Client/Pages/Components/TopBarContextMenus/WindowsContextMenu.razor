@@ -10,18 +10,21 @@
   <div id="TestWindow2" class="ContextMenuButton" @onclick="TestWindow2Toggle">
    Window2
   </div>
+  <div id="TestWindow2" class="ContextMenuButton" @onclick="Window3">
+   ManyWindow3
+  </div>
   </div>
  <div class="WindowsCurrentlyOpen">
   @foreach(Window w in _sys.ActiveWindows)
   {
    @if (_sys.ActiveWindow == w)
    {
-    <div class="ContextMenuButtonActive" @onclick="() => _sys.SetActiveWindow(w)">
+    <div class="WindowActive" @onclick="() => _sys.SetActiveWindow(null)" @oncontextmenu="() => _sys.CloseWindow(w)">
       @w.Title
       </div>
    } else
    {
-    <div class="ContextMenuButton" @onclick="() => _sys.SetActiveWindow(w)">
+    <div class="WindowInactive" @onclick="() => _sys.SetActiveWindow(w)" @oncontextmenu="() => _sys.CloseWindow(w)">
      @w.Title
     </div>
    }
@@ -33,6 +36,7 @@
 
  private static Window testWindow = new Window("TestWindow", "TestWindow");
  private static Window testWindow2 = new Window("TestWindow", "TestWindow2");
+ private int c = 0;
 
  private async Task TestWindowToggle()
  {
@@ -52,6 +56,11 @@
    _sys.SetActiveWindow(testWindow2);
 
   StateHasChanged();
+ }
+
+ private void Window3()
+ {
+  _sys.SetActiveWindow(new Window("TestWindow", "Window " + c++));
  }
 
 
